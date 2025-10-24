@@ -8,7 +8,7 @@ import OneUmmahLogo from "../OneUmmahLogo/OneUmmahLogo";
 
 const Footer = () => {
   return (
-    <footer className="footer footer-horizontal footer-center bg-[#0B0B0B] rounded-4xl text-primary-content p-10">
+    <footer className="footer footer-horizontal footer-center bg-[#0B0B0B] rounded-xl md:rounded-2xl lg:rounded-4xl text-primary-content p-10">
       <aside>
         <OneUmmahLogo></OneUmmahLogo>
         <p className="font-bold mt-2">
