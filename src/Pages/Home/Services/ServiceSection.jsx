@@ -47,13 +47,13 @@ const ServiceSection = () => {
 
   return (
     <section className="p-4 md:p-10 lg:p-16 bg-[#03373D] rounded-xl md:rounded-2xl lg:rounded-4xl my-10">
-      <div className="container mx-auto ">
+      <div className="max-w-7xl mx-auto ">
         <ServiceSectionTitle
           title="Our Services"
           subtitle="Enjoy fast, reliable parcel delivery with real-time tracking and zero hassle. From personal packages to business shipments — we deliver on time, every time."
         />
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
           {servicesData.map((service, index) => (
             <ServiceCard key={index} {...service} />
           ))}

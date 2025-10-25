@@ -18,7 +18,7 @@ const logos = [client1, client2, client3, client4, client5, client6, client7];
 const ClientLogoSlider = () => {
   return (
     <section className="py-16 bg-base-100">
-      <div className="max-w-6xl mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-4">
         <h2 className="text-3xl font-bold text-center text-[#03373D] mb-10">We've helped thousands of sales teams</h2>
 
         <Swiper
