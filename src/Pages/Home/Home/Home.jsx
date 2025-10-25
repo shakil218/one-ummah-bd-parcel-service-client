@@ -4,6 +4,9 @@ import ServiceSection from '../Services/ServiceSection';
 import ClientLogoSlider from '../ClientLogoSlider/ClientLogoSlider';
 import BenefitsSection from '../BenefitsSection/BenefitsSection';
 import WorkProcess from '../WorkProcess/WorkProcess';
+import Merchant from '../Merchant/Merchant';
+import TestimonialsSection from '../Testimonials/TestimonialsSection';
+
 
 const Home = () => {
   return (
@@ -13,6 +16,8 @@ const Home = () => {
       <ServiceSection></ServiceSection>
       <ClientLogoSlider></ClientLogoSlider>
       <BenefitsSection></BenefitsSection>
+      <Merchant></Merchant>
+      <TestimonialsSection></TestimonialsSection>
     </div>
   );
 };

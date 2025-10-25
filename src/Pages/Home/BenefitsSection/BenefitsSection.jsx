@@ -1,7 +1,7 @@
 import React from "react";
 import trackingImg from "../../../assets/live-tracking.png";
 import safeDeliveryImg from "../../../assets/safe-delivery.png";
-import supportImg from "../../../assets/safe-delivery.png";
+import supportImg from "../../../assets/support.jpg";
 
 const BenefitsSection = () => {
   const benefits = [

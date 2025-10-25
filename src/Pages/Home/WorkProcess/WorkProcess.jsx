@@ -4,6 +4,7 @@ import {
   FaMotorcycle,
   FaWarehouse,
 } from "react-icons/fa";
+// eslint-disable-next-line no-unused-vars
 import { motion } from "motion/react";
 
 const WorkProcess = () => {
@@ -61,7 +62,7 @@ const WorkProcess = () => {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-xl font-semibold mb-2">{step.title}</h3>
+                <h3 className="text-xl text-[#03373D] font-semibold mb-2">{step.title}</h3>
 
                 {/* Description */}
                 <p className="text-gray-600 text-sm">{step.description}</p>
