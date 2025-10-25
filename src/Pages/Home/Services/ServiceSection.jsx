@@ -1,8 +1,8 @@
 import React from "react";
 import ServiceSectionTitle from "./ServiceSectionTitle";
 import ServiceCard from "./ServiceCard";
-import { FaBoxes, FaBuilding, FaMapMarkedAlt, FaMoneyBillWave, FaUndo } from "react-icons/fa";
-import { FaTruckFast } from "react-icons/fa6";
+import { FaBoxes, FaBuilding, FaMapMarkedAlt, FaUndo } from "react-icons/fa";
+import { FaHandHoldingDollar, FaTruckFast } from "react-icons/fa6";
 
 const ServiceSection = () => {
   const servicesData = [
@@ -25,7 +25,7 @@ const ServiceSection = () => {
         "We also offer customized service with inventory management support, online order processing, packaging, and after sales support.",
     },
     {
-      icon: <FaMoneyBillWave className="text-4xl text-[#CAEB66]" />,
+      icon: <FaHandHoldingDollar className="text-4xl text-[#CAEB66]" />,
       title: "Cash on Home Delivery",
       description:
         "100% cash on delivery anywhere in Bangladesh with guaranteed safety of your product.",
@@ -46,7 +46,7 @@ const ServiceSection = () => {
 
 
   return (
-    <section className="p-4 md:p-10 lg:p-20 bg-[#03373D] rounded-xl md:rounded-2xl lg:rounded-4xl my-10">
+    <section className="p-4 md:p-10 lg:p-16 bg-[#03373D] rounded-xl md:rounded-2xl lg:rounded-4xl my-10">
       <div className="container mx-auto ">
         <ServiceSectionTitle
           title="Our Services"
