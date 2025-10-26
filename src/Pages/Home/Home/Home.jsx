@@ -5,7 +5,8 @@ import ClientLogoSlider from '../ClientLogoSlider/ClientLogoSlider';
 import BenefitsSection from '../BenefitsSection/BenefitsSection';
 import WorkProcess from '../WorkProcess/WorkProcess';
 import Merchant from '../Merchant/Merchant';
-import TestimonialsSection from '../Testimonials/TestimonialsSection';
+import TestimonialCarousal from '../TestimonialCarousal/TestimonialCarousal';
+import FAQSection from '../FAQSection/FAQSection';
 
 
 const Home = () => {
@@ -17,7 +18,8 @@ const Home = () => {
       <ClientLogoSlider></ClientLogoSlider>
       <BenefitsSection></BenefitsSection>
       <Merchant></Merchant>
-      <TestimonialsSection></TestimonialsSection>
+      <TestimonialCarousal></TestimonialCarousal>
+      <FAQSection></FAQSection>
     </div>
   );
 };

@@ -17,9 +17,9 @@ const logos = [client1, client2, client3, client4, client5, client6, client7];
 
 const ClientLogoSlider = () => {
   return (
-    <section className="py-16 bg-base-100">
-      <div className="max-w-7xl mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center text-[#03373D] mb-10">We've helped thousands of sales teams</h2>
+    <section className="max-w-7xl mx-auto py-16 bg-base-200">
+      <div>
+        <h2 className="text-3xl font-extrabold text-center text-[#03373D] mb-10">We've helped thousands of sales teams</h2>
 
         <Swiper
           modules={[Autoplay]}
@@ -36,7 +36,7 @@ const ClientLogoSlider = () => {
           breakpoints={{
             640: { slidesPerView: 3 },
             768: { slidesPerView: 4 },
-            1024: { slidesPerView: 5 },
+            1024: { slidesPerView: 6 },
           }}
           className="mySwiper"
         >

@@ -28,8 +28,8 @@ const BenefitsSection = () => {
     },
   ];
   return (
-    <section className="w-full bg-base-100 ">
-      <div className="max-w-7xl mx-auto px-4">
+    <section className="max-w-7xl mx-auto  bg-base-200 ">
+      <div className="">
         <div className="flex flex-col gap-8">
           {benefits.map((benefit) => (
             <div

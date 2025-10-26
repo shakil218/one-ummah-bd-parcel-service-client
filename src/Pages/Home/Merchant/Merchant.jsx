@@ -16,7 +16,7 @@ const Merchant = () => {
           viewport={{ once: true }}
           className="flex-1 text-center lg:text-left"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-3xl md:text-4xl font-extrabold mb-4">
             Merchant and Customer Satisfaction is Our First Priority
           </h2>
           <p className="text-gray-200 mb-8">

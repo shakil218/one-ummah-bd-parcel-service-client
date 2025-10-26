@@ -40,10 +40,10 @@ const WorkProcess = () => {
   ];
 
   return (
-    <section className="w-full bg-base-100 ">
+    <section className="w-full bg-base-100 py-10 rounded-2xl">
       <div className="max-w-7xl mx-auto px-4 ">
         {/* Section Title */}
-        <h2 className="text-3xl font-bold mb-4">How It Works</h2>
+        <h2 className="text-3xl font-extrabold mb-4">How It Works</h2>
 
         {/* Grid Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -62,7 +62,9 @@ const WorkProcess = () => {
                 </div>
 
                 {/* Title */}
-                <h3 className="text-xl text-[#03373D] font-semibold mb-2">{step.title}</h3>
+                <h3 className="text-xl text-[#03373D] font-semibold mb-2">
+                  {step.title}
+                </h3>
 
                 {/* Description */}
                 <p className="text-gray-600 text-sm">{step.description}</p>
