@@ -23,6 +23,7 @@ export const router = createBrowserRouter([
             <CoverageArea/>
           </PrivateRoute>
         ),
+        loader: ()=>fetch("../../public/warehouses.json")
       }
     ]
   },
