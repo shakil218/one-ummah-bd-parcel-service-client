@@ -1,7 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { motion } from "framer-motion";
 import FAQItem from "./FAQItem";
-import arrowImg from '../../../assets/arrow.png'
+import arrowImg from "../../../assets/arrow.png";
 
 const FAQSection = () => {
   const faqs = [
@@ -34,10 +34,6 @@ const FAQSection = () => {
 
   return (
     <section className="max-w-7xl mx-auto px-4 relative w-full overflow-hidden py-16 bg-base-200">
-      {/* Decorative background shapes */}
-      {/* <div className="absolute top-20 -left-20 h-64 w-64 bg-blue-200/40 rounded-full blur-3xl" />
-      <div className="absolute -right-20 bottom-20 h-64 w-64 bg-blue-200/40 rounded-full blur-3xl" /> */}
-
       <div className="relative container mx-auto max-w-4xl px-4">
         {/* Header */}
         <motion.div
@@ -79,9 +75,9 @@ const FAQSection = () => {
           <p className="text-gray-500 text-sm mb-4">We’re here to help you</p> */}
           <div className="flex justify-center items-center">
             <button className="btn btn-primary font-bold text-[#1F1F1F]  px-4 py-2 rounded-md text-sm  transition">
-            See More FAQ’s
-          </button>
-          <img src={arrowImg} alt="" className="w-10 h-10"/>
+              See More FAQ’s
+            </button>
+            <img src={arrowImg} alt="" className="w-10 h-10" />
           </div>
         </motion.div>
       </div>

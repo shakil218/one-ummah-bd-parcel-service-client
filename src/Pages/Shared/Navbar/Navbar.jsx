@@ -1,21 +1,43 @@
 import React from "react";
-import { NavLink } from "react-router";
+import { Link, NavLink, useNavigate } from "react-router";
 import OneUmmahLogo from "../OneUmmahLogo/OneUmmahLogo";
+import useAuth from "../../../hooks/useAuth";
 
 const Navbar = () => {
-  const navItems = (
-    <>
-      <li>
-        <NavLink to={"/"}>Home</NavLink>
-      </li>
-      <li>
-        <NavLink to={"/about"}>About Us</NavLink>
-      </li>
-      <li>
-        <NavLink to={"/contact"}>Contact</NavLink>
-      </li>
-    </>
-  );
+  const { user, logOut } = useAuth();
+  const navigate = useNavigate();
+
+  // const navItems = (
+  //   <>
+  //     <li>
+  //       <NavLink to={"/"}>Home</NavLink>
+  //     </li>
+  //     <li>
+  //       <NavLink to={"/about"}>About Us</NavLink>
+  //     </li>
+  //     <li>
+  //       <NavLink to={"/coverage"}>Coverage Area</NavLink>
+  //     </li>
+  //     <li>
+  //       <NavLink to={"/contact"}>Contact</NavLink>
+  //     </li>
+  //   </>
+  // );
+  const navItems = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Coverage Area", path: "/coverage" },
+    { name: "Contact", path: "/contact" },
+  ];
+
+  const handleSignOut = () => {
+    logOut()
+      .then(() => {
+        // alert("User successfully sign out")
+        navigate("/login");
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="navbar bg-base-100 shadow-sm">
@@ -42,16 +64,55 @@ const Navbar = () => {
             tabIndex="-1"
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
-            {navItems}
+            {/* {navItems} */}
+            {navItems.map((item) => (
+              <li key={item.path}>
+                <NavLink
+                  to={item.path}
+                  end
+                  className={({ isActive }) =>
+                    isActive
+                      ? "text-primary font-semibold border-b-2 border-primary pb-1 transition"
+                      : "text-gray-600 hover:text-primary transition"
+                  }
+                >
+                  {item.name}
+                </NavLink>
+              </li>
+            ))}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl"><OneUmmahLogo></OneUmmahLogo></a>
+        <a className="btn btn-ghost text-xl">
+          <OneUmmahLogo></OneUmmahLogo>
+        </a>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">{navItems}</ul>
+        <ul className="menu menu-horizontal px-1">
+          {navItems.map((item) => (
+            <li key={item.path}>
+              <NavLink
+                to={item.path}
+                end
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-primary font-semibold border-b-2 border-primary pb-1 transition"
+                    : "text-gray-600 hover:text-[#7ea906] transition"
+                }
+              >
+                {item.name}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Button</a>
+        <div onClick={handleSignOut}>
+          {user && user?.email ? (
+            <Link className="btn bg-primary">Log Out</Link>
+          ) : (
+            <Link className="btn bg-primary">Login</Link>
+          )}
+        </div>
       </div>
     </div>
   );
