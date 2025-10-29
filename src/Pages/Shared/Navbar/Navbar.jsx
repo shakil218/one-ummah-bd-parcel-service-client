@@ -26,6 +26,7 @@ const Navbar = () => {
   const navItems = [
     { name: "Home", path: "/" },
     { name: "About", path: "/about" },
+    { name: "Send A Parcel", path: "/sendParcel" },
     { name: "Coverage Area", path: "/coverage" },
     { name: "Contact", path: "/contact" },
   ];
@@ -69,7 +70,6 @@ const Navbar = () => {
               <li key={item.path}>
                 <NavLink
                   to={item.path}
-                  end
                   className={({ isActive }) =>
                     isActive
                       ? "text-primary font-semibold border-b-2 border-primary pb-1 transition"
@@ -92,7 +92,6 @@ const Navbar = () => {
             <li key={item.path}>
               <NavLink
                 to={item.path}
-                end
                 className={({ isActive }) =>
                   isActive
                     ? "text-primary font-semibold border-b-2 border-primary pb-1 transition"
