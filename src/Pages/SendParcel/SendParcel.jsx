@@ -1,7 +1,23 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useLoaderData } from "react-router";
+
 
 const SendParcel = () => {
+  const serviceCenters = useLoaderData();
+
+  const [selectedSenderRegion, setSelectedSenderRegion] = useState("");
+  const [selectedReceiverRegion, setSelectedReceiverRegion] = useState("");
+
+  const regions = [...new Set(serviceCenters.map((c) => c.region))];
+
+  const senderCenters = serviceCenters.filter(
+    (c) => c.region === selectedSenderRegion
+  );
+  const receiverCenters = serviceCenters.filter(
+    (c) => c.region === selectedReceiverRegion
+  );
+
   const {
     register,
     handleSubmit,
@@ -126,7 +142,7 @@ const SendParcel = () => {
                 Sender Details
               </h3>
 
-              {/* Row 1: Name + Sender Pickup Wire house */}
+              {/* Row 1:Sender Name + Contact */}
               <div className="flex flex-col lg:flex-row gap-4">
                 {/* sender name */}
                 <div className="form-control flex-1">
@@ -137,37 +153,6 @@ const SendParcel = () => {
                     type="text"
                     defaultValue="John Doe"
                     {...register("senderName", { required: true })}
-                    className="input input-bordered w-full"
-                  />
-                </div>
-                {/* Sender Pickup Wire house */}
-                <div className="form-control flex-1">
-                  <label className="label">
-                    <span className="label-text">Sender Pickup Wire house</span>
-                  </label>
-                  <select
-                    {...register("senderWireHouse", { required: true })}
-                    className="select select-bordered w-full"
-                  >
-                    <option value="">Select Wire house</option>
-                    <option>Uttara</option>
-                    <option>Banani</option>
-                    <option>Mirpur</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Row 2: Address + Contact */}
-              <div className="flex flex-col lg:flex-row gap-4 mt-4">
-                {/* Address */}
-                <div className="form-control flex-1">
-                  <label className="label">
-                    <span className="label-text">Address</span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Enter pickup address"
-                    {...register("senderAddress", { required: true })}
                     className="input input-bordered w-full"
                   />
                 </div>
@@ -185,20 +170,55 @@ const SendParcel = () => {
                 </div>
               </div>
 
-              {/* Region */}
+              {/* Row 2:Sender Region + Sender Pickup Wire house */}
+              <div className="flex flex-col lg:flex-row gap-4 mt-4">
+                {/* Region */}
+                <div className="form-control flex-1">
+                  <label className="label">
+                    <span className="label-text">Select Region</span>
+                  </label>
+                  <select
+                    {...register("senderRegion", { required: true })}
+                    onChange={(e) => setSelectedSenderRegion(e.target.value)}
+                    className="select select-bordered w-full"
+                  >
+                    <option value="">Select Region</option>
+                    {regions.map((region) => (
+                      <option key={region}>{region}</option>
+                    ))}
+                  </select>
+                </div>
+
+                {/* Sender Pickup Wire house */}
+                <div className="form-control flex-1">
+                  <label className="label">
+                    <span className="label-text">Sender Pickup Wire house</span>
+                  </label>
+                  <select
+                    {...register("senderWireHouse", { required: true })}
+                    className="select select-bordered w-full"
+                  >
+                    <option value="">Select Wire House</option>
+                    {senderCenters.map((center) => (
+                      <option key={center.id}>
+                        {center.name} ({center.district})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Address */}
               <div className="form-control mt-4">
                 <label className="label">
-                  <span className="label-text">Select Region</span>
+                  <span className="label-text">Address</span>
                 </label>
-                <select
-                  {...register("senderRegion", { required: true })}
-                  className="select select-bordered w-full"
-                >
-                  <option value="">Select Region</option>
-                  <option>Dhaka</option>
-                  <option>Chittagong</option>
-                  <option>Rajshahi</option>
-                </select>
+                <input
+                  type="text"
+                  placeholder="Enter pickup address"
+                  {...register("senderAddress", { required: true })}
+                  className="input input-bordered w-full"
+                />
               </div>
 
               {/* Pickup Instructions */}
@@ -220,7 +240,7 @@ const SendParcel = () => {
                 Receiver Details
               </h3>
 
-              {/* Row 1: Name + Receiver Delivery Wire house */}
+              {/* Row 1: Receiver Name + Contact */}
               <div className="flex flex-col lg:flex-row gap-4">
                 <div className="form-control flex-1">
                   <label className="label">
@@ -230,39 +250,6 @@ const SendParcel = () => {
                     type="text"
                     placeholder="Enter receiver name"
                     {...register("receiverName", { required: true })}
-                    className="input input-bordered w-full"
-                  />
-                </div>
-                {/* Receiver Delivery Wire house */}
-                <div className="form-control flex-1">
-                  <label className="label">
-                    <span className="label-text">
-                      Receiver Delivery Wire house
-                    </span>
-                  </label>
-                  <select
-                    {...register("receiverWireHouse", { required: true })}
-                    className="select select-bordered w-full"
-                  >
-                    <option value="">Select Wire house</option>
-                    <option>Uttara</option>
-                    <option>Banani</option>
-                    <option>Mirpur</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Row 2: Address + Service Center */}
-              <div className="flex flex-col lg:flex-row gap-4 mt-4">
-                {/* Address */}
-                <div className="form-control flex-1">
-                  <label className="label">
-                    <span className="label-text">Receiver Address</span>
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="Enter delivery address"
-                    {...register("receiverAddress", { required: true })}
                     className="input input-bordered w-full"
                   />
                 </div>
@@ -280,20 +267,56 @@ const SendParcel = () => {
                 </div>
               </div>
 
-              {/* Region */}
+              {/* Row 2: Receiver Region + Service Center */}
+              <div className="flex flex-col lg:flex-row gap-4 mt-4">
+                {/* Region */}
+                <div className="form-control flex-1">
+                  <label className="label">
+                    <span className="label-text">Select Region</span>
+                  </label>
+                  <select
+                    {...register("receiverRegion", { required: true })}
+                    onChange={(e) => setSelectedReceiverRegion(e.target.value)}
+                    className="select select-bordered w-full"
+                  >
+                    <option value="">Select Region</option>
+                    {regions.map((region) => (
+                      <option key={region}>{region}</option>
+                    ))}
+                  </select>
+                </div>
+                {/* Receiver Delivery Wire house */}
+                <div className="form-control flex-1">
+                  <label className="label">
+                    <span className="label-text">
+                      Receiver Delivery Wire House
+                    </span>
+                  </label>
+                  <select
+                    {...register("receiverWireHouse", { required: true })}
+                    className="select select-bordered w-full"
+                  >
+                    <option value="">Select Receiver Wire House</option>
+                    {receiverCenters.map((center) => (
+                      <option key={center.id}>
+                        {center.name} ({center.district})
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              {/* Address */}
               <div className="form-control mt-4">
                 <label className="label">
-                  <span className="label-text">Select Region</span>
+                  <span className="label-text">Receiver Address</span>
                 </label>
-                <select
-                  {...register("receiverRegion", { required: true })}
-                  className="select select-bordered w-full"
-                >
-                  <option value="">Select Region</option>
-                  <option>Dhaka</option>
-                  <option>Chittagong</option>
-                  <option>Rajshahi</option>
-                </select>
+                <input
+                  type="text"
+                  placeholder="Enter delivery address"
+                  {...register("receiverAddress", { required: true })}
+                  className="input input-bordered w-full"
+                />
               </div>
 
               {/* Delivery Instructions */}
@@ -317,7 +340,10 @@ const SendParcel = () => {
 
           {/* Submit Button */}
           <div className="mt-6 ">
-            <button type="submit" className="btn btn-primary text-black w-full lg:w-sm">
+            <button
+              type="submit"
+              className="btn btn-primary text-black w-full lg:w-sm"
+            >
               Proceed to Confirm Booking
             </button>
           </div>

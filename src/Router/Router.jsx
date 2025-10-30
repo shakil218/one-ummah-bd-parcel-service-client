@@ -33,6 +33,7 @@ export const router = createBrowserRouter([
             <SendParcel></SendParcel>
           </PrivateRoute>
         ),
+        loader: () => fetch("../../public/warehouses.json"),
       },
     ],
   },
