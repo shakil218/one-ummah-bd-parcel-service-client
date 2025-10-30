@@ -1,13 +1,16 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useLoaderData } from "react-router";
-
+import toast from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 
 const SendParcel = () => {
   const serviceCenters = useLoaderData();
 
   const [selectedSenderRegion, setSelectedSenderRegion] = useState("");
   const [selectedReceiverRegion, setSelectedReceiverRegion] = useState("");
+  const [parcelType, setParcelType] = useState("document");
+  const [modalData, setModalData] = useState(null);
 
   const regions = [...new Set(serviceCenters.map((c) => c.region))];
 
@@ -24,21 +27,51 @@ const SendParcel = () => {
     reset,
     formState: { errors },
   } = useForm();
-  const [parcelType, setParcelType] = useState("document");
+
+  
 
   const onSubmit = (data) => {
-    // Simulate cost calculation
-    let cost = 50;
-    if (data.type === "non-document") cost += 30;
-    if (data.weight) cost += Number(data.weight) * 5;
+  const { parcelType, parcelWeight = 0, receiverRegion } = data;
+  const weight = parseFloat(parcelWeight) || 0;
 
-    alert(`Delivery Cost: $${cost}\nProceeding to confirm booking...`);
-    reset();
-  };
+  const isOutsideCity =
+    receiverRegion?.toLowerCase() !== "dhaka" &&
+    receiverRegion?.toLowerCase() !== "within city";
+
+  // Initialize cost and breakdown
+  let cost = 0;
+  let breakdown = { base: 0, extra: 0 };
+
+  // === Pricing Logic ===
+  if (parcelType === "document") {
+    cost = isOutsideCity ? 80 : 60;
+    breakdown.base = cost;
+    breakdown.extra = 0;
+  } else if (parcelType === "non-document") {
+    if (weight <= 3) {
+      cost = isOutsideCity ? 150 : 110;
+      breakdown.base = cost;
+      breakdown.extra = 0;
+    } else {
+      const extraWeight = weight - 3;
+      cost = isOutsideCity
+        ? 150 + extraWeight * 40 + 40
+        : 110 + extraWeight * 40;
+
+      breakdown.base = isOutsideCity ? 150 : 110;
+      breakdown.extra = cost - breakdown.base; // extra cost for >3kg
+    }
+  }
+
+  // === Set modal data ===
+  setModalData({ data, cost, breakdown });
+};
+
 
   return (
     <div className="bg-base-100 py-8 my-5 rounded-2xl">
       <div className="max-w-7xl mx-auto px-4">
+        <Toaster position="top-center"></Toaster>
         {/* Title & Subtitle */}
         <div className="text-left mb-4">
           <h1 className="text-3xl font-bold text-gray-800">Send a Parcel</h1>
@@ -71,10 +104,11 @@ const SendParcel = () => {
                   <input
                     type="radio"
                     value={type}
-                    {...register("type", { required: true })}
+                    {...register("parcelType", { required: true })}
                     onChange={() => setParcelType(type)}
                     className="peer absolute opacity-0"
                   />
+
                   <div
                     className={`
                   w-5 h-5 rounded-full border-2 border-gray-400
@@ -121,7 +155,7 @@ const SendParcel = () => {
                   type="number"
                   step="0.1"
                   placeholder="Enter parcel weight"
-                  {...register("weight")}
+                  {...register("parcelWeight")} // <-- changed from "weight"
                   disabled={parcelType === "document"}
                   className={`input input-bordered w-full ${
                     parcelType === "document"
@@ -151,7 +185,7 @@ const SendParcel = () => {
                   </label>
                   <input
                     type="text"
-                    defaultValue="John Doe"
+                    defaultValue="Shakil"
                     {...register("senderName", { required: true })}
                     className="input input-bordered w-full"
                   />
@@ -199,8 +233,8 @@ const SendParcel = () => {
                     className="select select-bordered w-full"
                   >
                     <option value="">Select Wire House</option>
-                    {senderCenters.map((center) => (
-                      <option key={center.id}>
+                    {senderCenters.map((center, index) => (
+                      <option key={index}>
                         {center.name} ({center.district})
                       </option>
                     ))}
@@ -297,8 +331,8 @@ const SendParcel = () => {
                     className="select select-bordered w-full"
                   >
                     <option value="">Select Receiver Wire House</option>
-                    {receiverCenters.map((center) => (
-                      <option key={center.id}>
+                    {receiverCenters.map((center, index) => (
+                      <option key={index}>
                         {center.name} ({center.district})
                       </option>
                     ))}
@@ -348,6 +382,81 @@ const SendParcel = () => {
             </button>
           </div>
         </form>
+        {/* Pricing Confirmation Modal */}
+        {modalData && (
+          <div className="modal modal-open">
+            <div className="modal-box relative">
+              <h3 className="font-bold text-lg mb-2">Confirm Your Booking</h3>
+
+              <p className="py-2 text-gray-700">
+                Estimated Delivery Cost:{" "}
+                <span className="font-semibold">৳{modalData.cost}</span>
+              </p>
+
+              <div className="bg-gray-50 p-4 rounded-lg text-gray-700 space-y-2 max-h-60 overflow-auto">
+                <p className="font-semibold">
+                  💡 How your Estimated Cost was calculated:
+                </p>
+
+                {/* Cost Breakdown */}
+                <div className="bg-gray-100 p-3 rounded-lg mt-2 text-gray-700 space-y-1">
+                  <p className="font-semibold">💡 Cost Breakdown:</p>
+                  <p>Your Base Cost: ৳{modalData.breakdown.base}</p>
+                  <p>Your Extra Cost: ৳{modalData.breakdown.extra}</p>
+                  <p className="font-bold">Total Cost: ৳{modalData.cost}</p>
+                </div>
+
+                <hr className="my-2" />
+
+                <p className="font-semibold">📦 Pricing Policy:</p>
+                <p>
+                  <strong>Document:</strong> Any weight – Within City: ৳60,
+                  Outside City/District: ৳80
+                </p>
+                <p>
+                  <strong>Non-Document (up to 3kg):</strong> Within City: ৳110,
+                  Outside City/District: ৳150
+                </p>
+                <p>
+                  <strong>Non-Document (&gt; 3kg):</strong> +৳40 per extra kg,
+                  Outside City/District: +৳40 per extra kg + ৳40 extra
+                </p>
+              </div>
+
+              <p className="mt-2 text-sm text-gray-500">
+                Please review and confirm that you agree with the above pricing
+                policy before submitting your booking.
+              </p>
+
+              <div className="modal-action mt-4">
+                <button
+                  className="btn btn-primary"
+                  onClick={() => {
+                    const parcelData = {
+                      ...modalData.data,
+                      cost: modalData.cost,
+                      creation_date: new Date().toISOString(),
+                    };
+                    console.log("Saved Parcel Info:", parcelData);
+                    toast.success(
+                      "Your booking has been confirmed successfully!"
+                    );
+                    reset();
+                    setModalData(null);
+                  }}
+                >
+                  Agree & Confirm
+                </button>
+                <button
+                  className="btn btn-ghost"
+                  onClick={() => setModalData(null)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
