@@ -61,7 +61,7 @@ const MyParcels = () => {
   if (isLoading) return <p className="text-center py-10">Loading...</p>;
 
   return (
-    <section className="container px-4 mx-auto pt-12 gap-x-3">
+    <section className="container px-4 mx-auto pt-5 gap-x-3">
       <div className="flex items-center gap-2">
         <h2 className="text-lg font-medium text-gray-800 ">My Parcels</h2>
 
@@ -116,7 +116,7 @@ const MyParcels = () => {
                         {parcel.parcelType}
                       </td>
                       <td className="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">
-                        ${parcel.cost}
+                        ৳ {parcel.cost}
                       </td>
                       <td className="px-4 py-4 text-sm text-gray-700 whitespace-nowrap">
                         {parcel.created_by}
@@ -138,14 +138,6 @@ const MyParcels = () => {
                         {new Date(parcel.creation_date).toLocaleDateString()}
                       </td>
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
-                        {/* <div className="flex items-center gap-x-4">
-                          <button
-                            onClick={() => handleDelete(parcel._id)}
-                            className="text-gray-500 hover:text-red-500"
-                          >
-                            🗑️
-                          </button>
-                        </div> */}
                         <div className="flex items-center gap-x-6">
                           <button
                             onClick={() => handleDelete(parcel._id)}
