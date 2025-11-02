@@ -7,41 +7,60 @@ const Navbar = () => {
   const { user, logOut } = useAuth();
   const navigate = useNavigate();
 
-  // const navItems = (
-  //   <>
-  //     <li>
-  //       <NavLink to={"/"}>Home</NavLink>
-  //     </li>
-  //     <li>
-  //       <NavLink to={"/about"}>About Us</NavLink>
-  //     </li>
-  //     <li>
-  //       <NavLink to={"/coverage"}>Coverage Area</NavLink>
-  //     </li>
-  //     <li>
-  //       <NavLink to={"/contact"}>Contact</NavLink>
-  //     </li>
-  //   </>
-  // );
-  const navItems = [
-    { name: "Home", path: "/" },
-    { name: "About", path: "/about" },
-    { name: "Send A Parcel", path: "/sendParcel" },
-    { name: "Coverage Area", path: "/coverage" },
-    { name: "Contact", path: "/contact" },
-  ];
+  const linkClasses = ({ isActive }) =>
+    isActive
+      ? "text-primary font-semibold border-b-2 border-primary pb-1 transition"
+      : "text-gray-600 hover:text-primary transition";
+
+  const navItems = (
+    <>
+      <li>
+        <NavLink to={"/"} className={linkClasses}>
+          Home
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to={"/about"} className={linkClasses}>
+          About Us
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to={"/sendParcel"} className={linkClasses}>
+          Send A Parcel
+        </NavLink>
+      </li>
+      <li>
+        <NavLink to={"/coverage"} className={linkClasses}>
+          Coverage Area
+        </NavLink>
+      </li>
+      {user && (
+        <>
+          <li>
+            <NavLink to={"/dashboard"} className={linkClasses}>
+              Dashboard
+            </NavLink>
+          </li>
+        </>
+      )}
+      <li>
+        <NavLink to={"/contact"} className={linkClasses}>
+          Contact
+        </NavLink>
+      </li>
+    </>
+  );
 
   const handleSignOut = () => {
     logOut()
       .then(() => {
-        // alert("User successfully sign out")
         navigate("/login");
       })
       .catch((err) => console.log(err));
   };
 
   return (
-    <div className="navbar bg-base-100 shadow-sm">
+    <div className="navbar bg-base-100 z-50 relative shadow-sm">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -66,43 +85,16 @@ const Navbar = () => {
             className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow"
           >
             {/* {navItems} */}
-            {navItems.map((item) => (
-              <li key={item.path}>
-                <NavLink
-                  to={item.path}
-                  className={({ isActive }) =>
-                    isActive
-                      ? "text-primary font-semibold border-b-2 border-primary pb-1 transition"
-                      : "text-gray-600 hover:text-primary transition"
-                  }
-                >
-                  {item.name}
-                </NavLink>
-              </li>
-            ))}
+
+            {navItems}
           </ul>
         </div>
-        <a className="btn btn-ghost text-xl">
+        <Link className="">
           <OneUmmahLogo></OneUmmahLogo>
-        </a>
+        </Link>
       </div>
-      <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-          {navItems.map((item) => (
-            <li key={item.path}>
-              <NavLink
-                to={item.path}
-                className={({ isActive }) =>
-                  isActive
-                    ? "text-primary font-semibold border-b-2 border-primary pb-1 transition"
-                    : "text-gray-600 hover:text-[#7ea906] transition"
-                }
-              >
-                {item.name}
-              </NavLink>
-            </li>
-          ))}
-        </ul>
+      <div className="navbar-center hidden lg:flex ">
+        <ul className="menu menu-horizontal px-1">{navItems}</ul>
       </div>
       <div className="navbar-end">
         <div onClick={handleSignOut}>

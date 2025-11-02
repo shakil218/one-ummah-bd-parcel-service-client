@@ -7,7 +7,7 @@ const RootLayouts = () => {
   return (
     <div className='max-w-11/12 mx-auto my-5'>
       <Navbar></Navbar>
-      <div className='min-h-[calc(100vh-420px)]'>
+      <div className='min-h-[calc(100vh-420px)] '>
         <Outlet></Outlet>
       </div>
       <Footer></Footer>

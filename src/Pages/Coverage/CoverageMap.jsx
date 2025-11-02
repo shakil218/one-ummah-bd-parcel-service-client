@@ -3,10 +3,10 @@ import CoverageMapFocus from "./CoverageMapFocus";
 
 const CoverageMap = ({ branches, searchTerm }) => {
   return (
-    <div className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] relative rounded-xl overflow-hidden shadow-lg">
+    <div className="w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px]  z-10 relative rounded-xl overflow-hidden shadow-lg">
       <MapContainer
         center={[23.685, 90.3563]}
-        zoom={8}
+        zoom={7}
         scrollWheelZoom={false}
         className="absolute inset-0 w-full h-full"
       >
