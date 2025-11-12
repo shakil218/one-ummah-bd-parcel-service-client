@@ -3,10 +3,13 @@ import Swal from "sweetalert2";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
+import { Link, useNavigate } from "react-router";
+import Payment from './../Payment/Payment';
 
 const MyParcels = () => {
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
+  const navigate = useNavigate();
 
   // ✅ Load parcels for this user
   const {
@@ -21,6 +24,28 @@ const MyParcels = () => {
       return res.data;
     },
   });
+
+  // ✅ Handle viewDetails
+  const handleViewDetails = (parcel) => {
+    Swal.fire({
+      title: parcel.title,
+      html: `
+        <p><b>Type:</b> ${parcel.parcelType}</p>
+        <p><b>Cost:</b> $${parcel.cost}</p>
+        <p><b>Status:</b> ${parcel.status}</p>
+        <p><b>Created On:</b> ${new Date(
+          parcel.creation_date
+        ).toLocaleDateString()}</p>
+      `,
+      icon: "info",
+      confirmButtonText: "Close",
+    });
+  };
+
+  // ✅ Handle payment
+  const handlePayment = (id) => {
+    navigate(`/dashboard/payment/${id}`);
+  };
 
   // ✅ Handle delete
   const handleDelete = async (id) => {
@@ -96,6 +121,9 @@ const MyParcels = () => {
                       Status
                     </th>
                     <th className="px-4 py-3.5 text-sm font-normal text-left text-gray-500">
+                      Payment Status
+                    </th>
+                    <th className="px-4 py-3.5 text-sm font-normal text-left text-gray-500">
                       Creation Date
                     </th>
                     <th className="px-4 py-3.5 text-sm font-normal text-left text-gray-500">
@@ -134,11 +162,76 @@ const MyParcels = () => {
                           {parcel.status}
                         </span>
                       </td>
+                      <td className="px-4 py-4 text-sm whitespace-nowrap">
+                        <span
+                          className={`px-3 py-1 rounded-full text-xs ${
+                            parcel.payment_status !== "paid"
+                              
+                            ? "text-blue-600 bg-blue-100"
+                            : "text-green-600 bg-green-100"
+                          }`}
+                        >
+                          {parcel.payment_status}
+                        </span>
+                      </td>
                       <td className="px-4 py-4 text-sm text-gray-500 whitespace-nowrap">
                         {new Date(parcel.creation_date).toLocaleDateString()}
                       </td>
                       <td className="px-4 py-4 text-sm whitespace-nowrap">
                         <div className="flex items-center gap-x-6">
+                          {/* View Details */}
+                          <button
+                            onClick={() => handleViewDetails(parcel)}
+                            className="text-gray-500 hover:text-blue-600 transition-colors"
+                            title="View Details"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="w-5 h-5"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M2.25 12s3.75-6.75 9.75-6.75S21.75 12 21.75 12s-3.75 6.75-9.75 6.75S2.25 12 2.25 12z"
+                              />
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="M12 15a3 3 0 100-6 3 3 0 000 6z"
+                              />
+                            </svg>
+                          </button>
+
+                          {/* Payment */}
+                          {parcel.payment_status === "Unpaid" && (
+                            <button
+                              onClick={() => handlePayment(parcel._id)}
+                              disabled={parcel.payment_status === "paid"}
+                              className="text-gray-500 hover:text-green-600 transition-colors"
+                              title="Make Payment"
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                strokeWidth={1.5}
+                                stroke="currentColor"
+                                className="w-5 h-5"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  d="M2.25 8.25h19.5v10.5H2.25V8.25zM2.25 8.25V6a1.5 1.5 0 011.5-1.5h16.5A1.5 1.5 0 0121.75 6v2.25M4.5 12h.008v.008H4.5V12z"
+                                />
+                              </svg>
+                            </button>
+                          )}
+
+                          {/* Delete */}
                           <button
                             onClick={() => handleDelete(parcel._id)}
                             className="text-gray-500 transition-colors duration-200   hover:text-red-500 focus:outline-none"

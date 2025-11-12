@@ -69,7 +69,7 @@ const SendParcel = () => {
       }
     }
 
-    // ✅ Show SweetAlert2 modal instead of previous setModalData
+    // ✅ Show SweetAlert2 modal 
     Swal.fire({
       title: "Confirm Your Booking",
       html: `
@@ -132,7 +132,7 @@ const SendParcel = () => {
             status: "Pending",
             creation_date: new Date().toISOString(),
             trackingNumber: trackingId,
-            paymentStatus: "Pending",
+            payment_status: "Unpaid",
           };
 
           // Send parcelData to server
@@ -153,7 +153,7 @@ const SendParcel = () => {
 
               //TODO: Redirect to payment page after 1.8s
               // setTimeout(() => {
-              //   navigate(`/payment/${trackingId}`, { state: { parcelData } });
+              //   navigate(`/dashboard/payment/${parcelData._id}`, { state: { parcelData } });
               // }, 1800);
 
               // Reset form

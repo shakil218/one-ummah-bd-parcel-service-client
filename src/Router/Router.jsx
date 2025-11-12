@@ -9,6 +9,8 @@ import CoverageArea from "../Pages/Coverage/CoverageArea";
 import SendParcel from "../Pages/SendParcel/SendParcel";
 import DashboardLayouts from "../Layouts/DashboardLayouts";
 import MyParcels from "../Pages/Dashboard/MyParcels/MyParcels";
+import Payment from "../Pages/Dashboard/Payment/Payment";
+import PaymentHistory from "../Pages/Dashboard/Payment/PaymentHistory/PaymentHistory";
 
 export const router = createBrowserRouter([
   {
@@ -65,6 +67,14 @@ export const router = createBrowserRouter([
         path: "my-parcels",
         Component: MyParcels,
       },
+      {
+        path:"payment/:parcelId",
+        Component:Payment,
+      },
+      {
+        path:"payment-history",
+        Component:PaymentHistory,
+      }
     ],
   },
 ]);

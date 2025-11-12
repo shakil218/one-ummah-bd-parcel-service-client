@@ -1,20 +1,20 @@
 import React from "react";
 import OneUmmahLogo from "../Pages/Shared/OneUmmahLogo/OneUmmahLogo";
 import { Link, NavLink, Outlet } from "react-router";
+import { FaBox, FaHome, FaMoneyCheckAlt, FaSearchLocation, FaUserEdit } from "react-icons/fa";
 
 const DashboardLayouts = () => {
   const navLinkClasses = ({ isActive }) =>
     isActive
-      ? "text-primary font-semibold border-b-2 border-primary pb-1 transition"
+      ? "text-secondary font-semibold border-b-2 border-secondary pb-1 transition"
       : "text-gray-600 hover:text-primary transition";
-
 
   return (
     <div className="drawer lg:drawer-open">
       <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
       <div className="drawer-content flex flex-col">
         {/* Navbar */}
-        <div className="navbar bg-base-300 w-full lg:hidden">
+        <div className="navbar bg-base-200 w-full lg:hidden">
           <div className="flex-none lg:hidden">
             <label
               htmlFor="my-drawer-3"
@@ -37,7 +37,9 @@ const DashboardLayouts = () => {
             </label>
           </div>
           <div className="mx-2 flex-1 px-2">
-            <Link to={"/"}><OneUmmahLogo></OneUmmahLogo></Link>
+            <Link to={"/"}>
+              <OneUmmahLogo></OneUmmahLogo>
+            </Link>
           </div>
         </div>
         {/* Page content here */}
@@ -50,13 +52,34 @@ const DashboardLayouts = () => {
           className="drawer-overlay"
         ></label>
         <ul className="menu bg-base-300 min-h-full w-80 p-4">
-          <Link to={"/"}><OneUmmahLogo></OneUmmahLogo></Link>
+          <Link to={"/"}>
+            <OneUmmahLogo></OneUmmahLogo>
+          </Link>
           {/* Sidebar content here */}
           <li>
-            <NavLink>Home</NavLink>
+            <NavLink to={'/'} className={navLinkClasses}>
+              <FaHome /> Home
+            </NavLink>
           </li>
           <li>
-            <NavLink to={'/dashboard/my-parcels'} className={navLinkClasses}>My Parcels</NavLink>
+            <NavLink to="/dashboard/my-parcels" className={navLinkClasses}>
+              <FaBox /> My Parcels
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/payment-history" className={navLinkClasses}>
+              <FaMoneyCheckAlt /> Payment History
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/tracking" className={navLinkClasses}>
+              <FaSearchLocation /> Tracking Parcel
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/dashboard/update-profile" className={navLinkClasses}>
+              <FaUserEdit /> Update Profile
+            </NavLink>
           </li>
         </ul>
       </div>
